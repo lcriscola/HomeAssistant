@@ -1,0 +1,43 @@
+{
+		"mqtt_host": "192.168.1.5",
+		"mqtt_user": "admin",
+		"mqtt_password": "Heud2911",
+		"listenToAllEvents": false,
+		"cameras": [
+			{
+				"host": "192.168.1.107",
+				"password": "Heud2911",
+				"name": "Front Door",
+				"uniqueid": "front_door"
+			},
+			{
+				"host": "192.168.1.230",
+				"password": "Heud2911",
+				"name": "Garage Camera",
+				"uniqueid": "garage_camera"
+			}
+		],
+		"sensors": [
+			{
+				"code": "VideoMotion",
+				"deviceClass": "motion",
+				"component": "binary_sensor",
+				"name": "Motion Detected",
+				"uniqueId": "motion_detected"
+			},
+			{
+				"code": "CrossRegionDetection",
+				"deviceClass": "motion",
+				"component": "binary_sensor",
+				"name": "Human Motion Detected",
+				"uniqueId": "human_motion_detected"
+			},
+			{
+				"code": "_CallRemoveMask",
+				"deviceClass": "power",
+				"component": "binary_sensor",
+				"name": "Doorbell Pressed",
+				"uniqueId": "doorbell_pressed"
+			}
+		]
+}

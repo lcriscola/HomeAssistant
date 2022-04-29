@@ -1,0 +1,7 @@
+﻿NetDaemon3Apps.CustomThermostatConfig:
+  ThermostatId: climate.ac
+  ThermostatTemperatureId:  sensor.ac_air_temperature 
+  SensorId: sensor.temperature_sensor_current
+  CoolMinTemp: 71
+  HeatMaxTemp: 78
+  

@@ -1,0 +1,15 @@
+{
+  "name": "Xml to Json",
+  "version": "1",
+  "slug": "xml_to_json",
+  "description": "Converts an xml returned by a url to json",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "webui":"[PROTO:option_name]://[HOST]:[PORT:99]/swagger",
+  "ports":{
+	"80/tcp": 99
+  },
+  "options": {},
+  "schema": {}
+}

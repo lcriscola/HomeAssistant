@@ -1,0 +1,86 @@
+{
+    "name":  "Amcrest to MQTT",
+    "version":  37,
+    "slug":  "amcrest_to_mqtt",
+    "description":  "Converts Amcrest events (Streamed) to MQTT",
+    "arch":  [
+                 "armhf",
+                 "armv7",
+                 "aarch64",
+                 "amd64",
+                 "i386"
+             ],
+    "startup":  "application",
+    "boot":  "auto",
+    "ingress":  true,
+    "ingress_port":  8099,
+    "ports":  {
+                  "8099/tcp":  8080
+              },
+    "options":  {
+                    "mqtt_host":  "192.168.1.5",
+                    "mqtt_user":  "admin",
+                    "mqtt_password":  "Heud2911",
+                    "listenToAllEvents":  false,
+                    "cameras":  [
+                                    {
+                                        "host":  "192.168.1.107",
+                                        "password":  "Heud2911",
+                                        "name":  "Front Door",
+                                        "uniqueid":  "front_door"
+                                    },
+                                    {
+                                        "host":  "192.168.1.230",
+                                        "password":  "Heud2911",
+                                        "name":  "Garage Camera",
+                                        "uniqueid":  "garage_camera"
+                                    }
+                                ],
+                    "sensors":  [
+                                    {
+                                        "code":  "VideoMotion",
+                                        "deviceClass":  "motion",
+                                        "component":  "binary_sensor",
+                                        "name":  "Motion Detected",
+                                        "uniqueId":  "motion_detected"
+                                    },
+                                    {
+                                        "code":  "CrossRegionDetection",
+                                        "deviceClass":  "motion",
+                                        "component":  "binary_sensor",
+                                        "name":  "Human Motion Detected",
+                                        "uniqueId":  "human_motion_detected"
+                                    },
+                                    {
+                                        "code":  "_CallRemoveMask",
+                                        "deviceClass":  "power",
+                                        "component":  "binary_sensor",
+                                        "name":  "Doorbell Pressed",
+                                        "uniqueId":  "doorbell_pressed"
+                                    }
+                                ]
+                },
+    "schema":  {
+                   "mqtt_host":  "str",
+                   "mqtt_user":  "str",
+                   "mqtt_password":  "str",
+                   "listenToAllEvents":  "bool",
+                   "cameras":  [
+                                   {
+                                       "host":  "str",
+                                       "password":  "str",
+                                       "name":  "str",
+                                       "uniqueid":  "str"
+                                   }
+                               ],
+                   "sensors":  [
+                                   {
+                                       "code":  "str",
+                                       "deviceClass":  "str",
+                                       "component":  "str",
+                                       "name":  "str",
+                                       "uniqueId":  "str"
+                                   }
+                               ]
+               }
+}

@@ -1,0 +1,1 @@
+copy Curtains\curtain_switch.h \\192.168.1.5\config\esphome

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MQTTSender": {
+      "commandName": "Project",
+      "commandLineArgs": "homeassistant/switches/cockpit on"
+    }
+  }
+}

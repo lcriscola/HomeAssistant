@@ -1,0 +1,14 @@
+{
+  "commands": {
+    "publish amcrest 2 mqtt": {
+      "fileName": "powershell.exe",
+      "workingDirectory": ".",
+      "arguments": "-ExecutionPolicy Bypass -NonInteractive -File \"AmcrestMQTT\\publish amcrest 2 mqtt.ps1\""
+    },
+    "CopyCurtains": {
+      "fileName": "cmd.exe",
+      "workingDirectory": ".",
+      "arguments": "/c Curtains\\CopyCurtains.cmd"
+    }
+  }
+}

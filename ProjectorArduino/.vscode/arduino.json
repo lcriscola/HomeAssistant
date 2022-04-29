@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:micro",
+    "port": "COM9",
+    "sketch": "ProjectorArduino.ino",
+    "output": "c:\\temp\\projector"
+}

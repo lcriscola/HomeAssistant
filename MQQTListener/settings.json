@@ -1,0 +1,27 @@
+{
+  "mqtt_host": "192.168.1.5",
+  "mqtt_user": "admin",
+  "mqtt_password": "Heud2911",
+  "apps": {
+    "reboot": {
+      "file": "shutdown.exe",
+      "arguments": "/r /f /t 5",
+      "startupDirectory": ""
+    },
+    "f4Launcher": {
+      "file": "C:\\Projects\\FalconBMSTools\\FalconLauncher\\bin\\Release\\FalconLauncher.exe",
+      "arguments": "\"C:\\Falcon BMS 4.36\\User\\Config\\FalconBMSTools-Settings.json\" true",
+      "startupDirectory": "C:\\Projects\\FalconBMSTools\\FalconLauncher\\bin\\Release"
+    },
+    "shutdown": {
+      "file": "/bin/bash",
+      "arguments": "shutdown.sh",
+      "startupDirectory": "/home/pi"
+    },
+    "ls": {
+      "file": "ls",
+      "arguments": "-l",
+      "startupDirectory": ""
+    }
+  }
+}
