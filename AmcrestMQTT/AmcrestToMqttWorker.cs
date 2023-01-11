@@ -54,7 +54,8 @@ namespace AmcrestMQTT
                             if (_options.ListenToAllEvents)
                                 events = "All";
 
-                            var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]&keepalive=5";
+                            var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]";
+                            //var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]&keepalive=5";
                             var credCache = new CredentialCache();
                             credCache.Add(new Uri(url), "Digest", new NetworkCredential("admin", camera.Password));
                             using var httpClient = new HttpClient(new HttpClientHandler { Credentials = credCache });
