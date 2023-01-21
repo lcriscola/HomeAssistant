@@ -75,6 +75,7 @@ namespace AmcrestMQTT
                                             await SendStatus(sensor.GetStateTopic(camera.UniqueId), "ON");
                                         else
                                             await SendStatus(sensor.GetStateTopic(camera.UniqueId), "OFF");
+                                        break;
                                     }
                                     else
                                     {
