@@ -1,13 +1,15 @@
 ﻿using AmcrestMQTT.Models;
 using AmcrestMQTT.Topics;
 
+using MQTTnet;
+using MQTTnet.Client;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Mqtt;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,8 +56,7 @@ namespace AmcrestMQTT
                             if (_options.ListenToAllEvents)
                                 events = "All";
 
-                            var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]";
-                            //var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]&keepalive=5";
+                            var url = $"http://{camera.Host}/cgi-bin/eventManager.cgi?action=attach&codes=[{events}]&keepalive=5";
                             var credCache = new CredentialCache();
                             credCache.Add(new Uri(url), "Digest", new NetworkCredential("admin", camera.Password));
                             using var httpClient = new HttpClient(new HttpClientHandler { Credentials = credCache });
@@ -75,7 +76,6 @@ namespace AmcrestMQTT
                                             await SendStatus(sensor.GetStateTopic(camera.UniqueId), "ON");
                                         else
                                             await SendStatus(sensor.GetStateTopic(camera.UniqueId), "OFF");
-                                        break;
                                     }
                                     else
                                     {
@@ -119,7 +119,7 @@ namespace AmcrestMQTT
                     using (IMqttClient mqttClient = await GetMqttClient())
                     {
                         var text = status;
-                        await mqttClient.PublishAsync(new MqttApplicationMessage(topic, Encoding.UTF8.GetBytes(text)), MqttQualityOfService.AtLeastOnce);
+                        await mqttClient.PublishAsync(new MqttApplicationMessage() { Topic = topic, Payload = Encoding.UTF8.GetBytes(text) } );
                         Console.WriteLine($"\tMessage sent to {topic} with  {status}");
                         await mqttClient.DisconnectAsync();
                         return;
@@ -155,7 +155,8 @@ namespace AmcrestMQTT
                         state_topic = sensor.GetStateTopic(camera.UniqueId)
                     };
                     var text = System.Text.Json.JsonSerializer.Serialize(data);
-                    await mqttClient.PublishAsync(new MqttApplicationMessage(configTopic, Encoding.UTF8.GetBytes(text)), MqttQualityOfService.AtLeastOnce);
+                    await mqttClient.PublishAsync(new MqttApplicationMessage() { Topic = configTopic, Payload = Encoding.UTF8.GetBytes(text) });
+
                     Console.WriteLine($"\t{configTopic}");
                 }
             }
@@ -163,8 +164,17 @@ namespace AmcrestMQTT
 
         private async Task<IMqttClient> GetMqttClient()
         {
-            var mqttClient = await MqttClient.CreateAsync(_options.MQTT_Host);
-            await mqttClient.ConnectAsync(new MqttClientCredentials("amcrest2mqtt", _options.MQTT_User, _options.MQTT_Password));
+            var mqttFactory = new MqttFactory();
+            var mqttClient = mqttFactory.CreateMqttClient();
+
+            var mqttClientOptions = new MqttClientOptionsBuilder()
+                .WithTcpServer(_options.MQTT_Host)
+                .WithCredentials(_options.MQTT_User, _options.MQTT_Password)
+                .WithClientId("amcrest2mqtt")
+                .Build();
+
+            await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
             return mqttClient;
         }
 
