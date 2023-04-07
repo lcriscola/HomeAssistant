@@ -1,9 +1,11 @@
-﻿using MQTTSender.Models;
+﻿using MQTTnet.Client;
+using MQTTnet;
+
+using MQTTSender.Models;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mqtt;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,7 +39,7 @@ namespace MQTTSender
                     using (IMqttClient mqttClient = await GetMqttClient())
                     {
                         var text = value;
-                        await mqttClient.PublishAsync(new MqttApplicationMessage(topic, Encoding.UTF8.GetBytes(text)), MqttQualityOfService.AtLeastOnce);
+                        await mqttClient.PublishAsync(new MqttApplicationMessage() { Topic = topic, Payload = Encoding.UTF8.GetBytes(text) } );
                         Console.WriteLine($"\tMessage sent to {topic} with  {value}");
                         await mqttClient.DisconnectAsync();
                         return;
@@ -55,9 +57,19 @@ namespace MQTTSender
 
         private static async Task<IMqttClient> GetMqttClient()
         {
-            var mqttClient = await MqttClient.CreateAsync(_options.MQTT_Host);
-            await mqttClient.ConnectAsync(new MqttClientCredentials("amcrest2mqtt", _options.MQTT_User, _options.MQTT_Password));
+            var mqttFactory = new MqttFactory();
+            var mqttClient = mqttFactory.CreateMqttClient();
+
+            var mqttClientOptions = new MqttClientOptionsBuilder()
+                .WithTcpServer(_options.MQTT_Host)
+                .WithCredentials(_options.MQTT_User, _options.MQTT_Password)
+                .WithClientId("mqtt-sender")
+                .Build();
+
+            await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
             return mqttClient;
         }
+
     }
 }

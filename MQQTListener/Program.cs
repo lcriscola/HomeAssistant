@@ -4,7 +4,6 @@ using Microsoft.Extensions.Hosting;
 using MQQTListener.Models;
 
 using System.Diagnostics;
-using System.Net.Mqtt;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
