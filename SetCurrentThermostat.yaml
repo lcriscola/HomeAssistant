@@ -1,0 +1,43 @@
+﻿NetDaemon3Apps.SetCurrentThermostatConfig:
+  FallbackSensor: AC Room
+  IntervalCheck: 60
+  Periods:
+    - name: Morning
+      interval: 08:00-21:00
+    - name: Night
+      interval: 21:01-07:59
+
+  TempSensors: 
+    - sensorId: sensor.ac_air_temperature 
+      alias: AC Room
+      
+    - sensorId: sensor.lumi_lumi_weather_temperature 
+      alias: Living
+      period: Morning
+
+    - sensorId: sensor.lumi_lumi_weather_1cd2d307_temperature 
+      alias: Master Bedroom
+      period: Night
+      presence_entities: 
+        - person.administrator
+        - person.mariela
+
+    - sensorId: sensor.lumi_lumi_weather_d5a6d307_temperature 
+      alias: Franco
+      period: Night
+      presence_entities: 
+        - person.franco
+
+    - sensorId: sensor.lumi_lumi_weather_068ee007_temperature 
+      alias: Cami
+      period: Night
+      presence_entities: 
+        - person.camila
+
+    - sensorId: sensor.lumi_lumi_weather_8a7c6507_temperature
+      alias: Anto
+      period: Night
+      presence_entities: 
+        - person.antonella
+
+      

@@ -7,7 +7,7 @@ namespace Extensions.Scheduling;
 /// <summary>
 ///     Showcase the scheduling capabilities of NetDaemon
 /// </summary>
-[NetDaemonApp]
+//[NetDaemonApp]
 public class SchedulingApp
 {
     public SchedulingApp(IHaContext ha, INetDaemonScheduler scheduler)

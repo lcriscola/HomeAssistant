@@ -1,0 +1,5 @@
+NetDaemon3Apps.SwitchBotConfig:
+  SwitchBotUrl: https://api.switch-bot.com/v1.1
+  Token: 5c723ad1c6624dfcc011115fabf60187373201efa40cb3713d691de81252d7656d928c9513389c3780d2bdd5762bd5e2
+  Secret: 2c0b18afc9e36bd40b5fce2333e5f146
+  

@@ -1,0 +1,4 @@
+﻿NetDaemon3Apps.CustomThermostatConfig:
+  ThermostatId: climate.ac
+  SensorId: sensor.temperature_sensor_current
+  
