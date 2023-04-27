@@ -10,7 +10,7 @@
     },
     "f4Launcher": {
       "file": "C:\\Projects\\FalconBMSTools\\FalconLauncher\\bin\\Release\\FalconLauncher.exe",
-      "arguments": "\"C:\\Falcon BMS 4.36\\User\\Config\\FalconBMSTools-Settings.json\" true",
+      "arguments": "\"C:\\Falcon BMS 4.37\\User\\Config\\FalconBMSTools-Settings.json\" true",
       "startupDirectory": "C:\\Projects\\FalconBMSTools\\FalconLauncher\\bin\\Release"
     },
     "shutdown": {

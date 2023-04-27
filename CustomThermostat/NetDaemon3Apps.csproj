@@ -7,6 +7,18 @@
         <Nullable>enable</Nullable>
         <RootNamespace>NetDaemon3Apps</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="CustomThermostat.cs" />
+      <Compile Remove="CustomThermostatConfig.cs" />
+      <Compile Remove="SetCurrentThermostat.cs" />
+      <Compile Remove="SetCurrentThermostatConfig.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="CustomThermostat.yaml" />
+      <None Remove="SetCurrentThermostat.yaml" />
+    </ItemGroup>
     
     <ItemGroup>
         <None Update="$(MSBuildProjectDir)appsettings.Development.json">
