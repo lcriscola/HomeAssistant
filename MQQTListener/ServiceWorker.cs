@@ -17,7 +17,7 @@ namespace MQQTListener
     {
         Settings options;
 
-
+        public CancellationToken CancelationToken { get; private set; }
 
         public ServiceWorker()
         {
@@ -26,6 +26,34 @@ namespace MQQTListener
             });
 
         }
+
+        private Task MqttClient_DisconnectedAsync(MqttClientDisconnectedEventArgs arg)
+        {
+            connected = false;
+            return Task.CompletedTask;
+        }
+        bool connected = false;
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            this.CancelationToken = stoppingToken;
+
+            Directory.SetCurrentDirectory(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            options = System.Text.Json.JsonSerializer.Deserialize<Settings>(File.ReadAllText("settings.json"));
+
+
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                if (!connected)
+                {
+                    await Connect();
+                    connected = true;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
+            }
+        }
+
+
         async Task Connect()
         {
             while (true)
@@ -43,6 +71,7 @@ namespace MQQTListener
 
 
                     await mqttClient.ConnectAsync(mqttClientOptions);
+                    mqttClient.DisconnectedAsync += MqttClient_DisconnectedAsync;
                     mqttClient.ApplicationMessageReceivedAsync += x =>
                     {
                         Console.WriteLine("Received application message.");
@@ -125,76 +154,29 @@ namespace MQQTListener
 
                     await mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
 
-
-                    //mqttClient.Disconnected += MqttClient_Disconnected;
-                    //mqttClient.MessageStream.Subscribe(x =>
-                    //{
-                    //    try
-                    //    {
-                    //        options = Newtonsoft.Json.JsonConvert.DeserializeObject<Settings>(File.ReadAllText("settings.json"));
-
-                    //        var app = System.Text.Encoding.UTF8.GetString(x.Payload);
-                    //        if (options.Apps.TryGetValue(app, out var appFound))
-                    //        {
-
-                    //            if (x.Topic.EndsWith("start"))
-                    //            {
-
-                    //                var spi = new ProcessStartInfo();
-                    //                spi.FileName = appFound.File;
-                    //                if (!String.IsNullOrEmpty(appFound.Arguments))
-                    //                    spi.Arguments = appFound.Arguments;
-
-                    //                if (string.IsNullOrEmpty(appFound.StartupDirectory))
-                    //                    spi.WorkingDirectory = System.Environment.CurrentDirectory;
-                    //                else
-                    //                    spi.WorkingDirectory = appFound.StartupDirectory;
-
-                    //                spi.RedirectStandardOutput = true;
-                    //                spi.RedirectStandardInput = true;
-
-                    //                var proc = Process.Start(spi);
-                    //                proc.EnableRaisingEvents = true;
-                    //                proc.ErrorDataReceived += Proc_ErrorDataReceived;
-                    //                proc.OutputDataReceived += Proc_OutputDataReceived;
-
-
-
-                    //                Log($"Starting file {spi.FileName} {spi.Arguments} in  {spi.WorkingDirectory}");
-                    //            }
-                    //            else
-                    //            {
-                    //                Log("Stopping " + appFound.File);
-                    //                var procs = System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(appFound.File));
-                    //                foreach (var p in procs)
-                    //                {
-                    //                    p.Kill(true);
-                    //                }
-
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            throw new ArgumentException($"{app} not found");
-                    //        }
-                    //    }
-                    //    catch (global::System.Exception ex)
-                    //    {
-                    //        LogError(ex.ToString());
-                    //    }
-                    //});
+ 
                     Log("Connected to MQTT");
                     break;
 
                 }
                 catch (Exception ex)
                 {
+                    reconnectCount++;
+
+                    if (reconnectCount > 50)
+                        throw;
+
                     LogError(ex.ToString());
                     Thread.Sleep(5000);
                 }
             }
         }
 
+
+
+        int reconnectCount = 0;
+
+     
         private void Proc_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!String.IsNullOrEmpty(e.Data))
@@ -207,20 +189,6 @@ namespace MQQTListener
                 Log(e.Data);
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-
-
-            Directory.SetCurrentDirectory(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-            options = System.Text.Json.JsonSerializer.Deserialize<Settings>(File.ReadAllText("settings.json"));
-
-            await Connect();
-
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
-            }
-        }
 
         //private void MqttClient_Disconnected(object? sender, MqttEndpointDisconnected e)
         //{

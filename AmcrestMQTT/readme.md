@@ -1,0 +1,1 @@
+https://support.amcrest.com/hc/en-us/articles/360001080552-Amcrest-HTTP-API-SDK

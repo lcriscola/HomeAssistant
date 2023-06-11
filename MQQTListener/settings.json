@@ -13,6 +13,16 @@
       "arguments": "\"C:\\Falcon BMS 4.37\\User\\Config\\FalconBMSTools-Settings.json\" true",
       "startupDirectory": "C:\\Projects\\FalconBMSTools\\FalconLauncher\\bin\\Release"
     },
+    "startArduinoTools": {
+      "file": "powershell",
+      "arguments": "-f StartArduinoTools.ps1",
+      "startupDirectory": "d:\\Downloads\\Games\\falcon4"
+    },
+    "killArduinoTools": {
+      "file": "powershell",
+      "arguments": "-f KillArduinoTools.ps1",
+      "startupDirectory": "d:\\Downloads\\Games\\falcon4"
+    },
     "shutdown": {
       "file": "/bin/bash",
       "arguments": "shutdown.sh",
