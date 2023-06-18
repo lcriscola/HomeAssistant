@@ -1,16 +1,17 @@
 ﻿  MaddogStepper.cpp
-C:\Projects\HomeAssitant2.old\ProjectorArduino\MaddogStepper.cpp : warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(16,1): warning C4005: '__AVR_atmega32u4__': macro redefinition
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(16,1): message : '__AVR_atmega32u4__' previously declared on the command line
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(17,1): warning C4005: '__AVR_ATmega32U4__': macro redefinition
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(17,1): message : '__AVR_ATmega32U4__' previously declared on the command line
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(18,1): warning C4005: '__AVR_ATmega32u4__': macro redefinition
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(18,1): message : '__AVR_ATmega32u4__' previously declared on the command line
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(21,1): warning C4005: 'ARDUINO_AVR_MICRO': macro redefinition
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(21,1): message : 'ARDUINO_AVR_MICRO' previously declared on the command line
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(22,1): warning C4005: 'ARDUINO_ARCH_AVR': macro redefinition
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(22,1): message : 'ARDUINO_ARCH_AVR' previously declared on the command line
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(25,1): warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(34,1): warning C4117: macro name '__cplusplus' is reserved, '#undef' ignored
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(35,1): warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
-C:\Projects\HomeAssitant2.old\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(76,10): fatal  error C1083: Cannot open include file: 'arduino.h': No such file or directory
+C:\Projects\HomeAssitant\ProjectorArduino\MaddogStepper.cpp : warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(26,1): warning C4005: 'USB_MANUFACTURER': macro redefinition
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(26,1): message : 'USB_MANUFACTURER' previously declared on the command line
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(27,1): error C2001: newline in constant
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(27,1): warning C4005: 'USB_PRODUCT': macro redefinition
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(27,1): message : 'USB_PRODUCT' previously declared on the command line
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(28,1): warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(37,1): warning C4117: macro name '__cplusplus' is reserved, '#undef' ignored
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(38,1): warning C4117: macro name '__cplusplus' is reserved, '#define' ignored
+C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\7.3.0\include\stddef.h(216,23): error C2371: 'size_t': redefinition; different basic types
+C:\Projects\HomeAssitant\ProjectorArduino\predefined C++ types (compiler internal)(16,22): message : see declaration of 'size_t'
+C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\stdlib.h(73,3): error C2371: 'div_t': redefinition; different basic types
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(70,13): message : see declaration of 'div_t'
+C:\Program Files (x86)\Arduino\hardware\tools\avr\avr\include\stdlib.h(79,3): error C2371: 'ldiv_t': redefinition; different basic types
+C:\Projects\HomeAssitant\ProjectorArduino\__vm\.ProjectorArduino.vsarduino.h(71,13): message : see declaration of 'ldiv_t'
+C:\Program Files (x86)\Arduino\hardware\tools\avr\lib\gcc\avr\7.3.0\include\stdint.h(9,1): fatal  error C1021: invalid preprocessor command 'include_next'

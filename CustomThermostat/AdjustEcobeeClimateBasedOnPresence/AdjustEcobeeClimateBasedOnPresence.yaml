@@ -1,0 +1,39 @@
+NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence.AdjustEcobeeClimateBasedOnPresenceConfig:
+  EcobeeApiKey: yksbDqelD9ImKQ5N6ZnXczQc1bf9aT7a
+  NightModeIgnoreSensors:
+    - "Living Room"
+    - "Mariela Office"
+    - "Luciano Office"
+  DayModeIgnoreSensors:
+    - "Anto"
+    - "Cami"
+    - "Franco"
+  People:
+       - 
+         EntityId: "person.antonella"  
+         ActivateSensors: 
+          - "Anto"
+          - "Living Room"
+       -
+         EntityId: "person.camila"  
+         ActivateSensors: 
+          - "Cami"
+          - "Living Room"
+       -
+         EntityId: "person.franco"  
+         ActivateSensors: 
+          - "Franco"
+          - "Living Room"
+       -
+         EntityId: "person.mariela"  
+         ActivateSensors: 
+          - "Mariela Office"
+          - "Master"
+          - "Living Room"
+       -
+         EntityId: "person.administrator"  
+         ActivateSensors: 
+          - "Luciano Office"
+          - "Living Room"
+          - "Master"
+
