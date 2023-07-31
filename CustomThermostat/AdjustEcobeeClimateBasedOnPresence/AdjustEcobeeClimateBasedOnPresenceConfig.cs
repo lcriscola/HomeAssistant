@@ -11,6 +11,7 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
     public class AdjustEcobeeClimateBasedOnPresenceConfig
     {
         public AdjustEcobeeClimateBasedOnPresenceConfig_Person[] People { get; set; }
+        public string ForceHomeEntityId { get; set; }
         public string EcobeeApiKey { get; set; }
 
         public string[] NightModeIgnoreSensors { get; set; }

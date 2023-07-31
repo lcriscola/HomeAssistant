@@ -8,6 +8,8 @@ NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence.AdjustEcobeeClimateBasedOnPres
     - "Anto"
     - "Cami"
     - "Franco"
+    - "Master"
+  ForceHomeEntityId: "input_boolean.ac_presence_force_home"
   People:
        - 
          EntityId: "person.antonella"  

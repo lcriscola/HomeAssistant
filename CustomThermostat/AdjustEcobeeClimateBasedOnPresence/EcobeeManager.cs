@@ -41,7 +41,25 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
         {
             using HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _tokenData.access_token);
-            var response = await client.GetAsync("https://api.ecobee.com/1/thermostat?json={\"selection\":{\"includeProgram\":true, \"includeSensors\":\"true\", \"includeAlerts\":\"true\",\"selectionType\":\"registered\",\"selectionMatch\":\"\",\"includeEvents\":\"true\",\"includeSettings\":\"true\",\"includeRuntime\":\"true\"}}");
+            var selection =   new { 
+                selection=new
+                {
+                    selectionType= "registered",
+                    includeProgram = true,
+                    includeSensors = true,
+                    includeAlerts = true,
+                    seletionType = "registered",
+                    selectionMatch = "",
+                    includeSettings = true,
+                    includeRuntime = true,
+                    includeEquipmentStatus = true,
+                    includeNotificationSettings=true,
+                    includeUtility=true
+                }
+            };
+            var selectionText = System.Text.Json.JsonSerializer.Serialize(selection);
+
+            var response = await client.GetAsync($"https://api.ecobee.com/1/thermostat?json={selectionText}");
             var responseText = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {

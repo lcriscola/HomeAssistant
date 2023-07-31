@@ -38,7 +38,13 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
             _scheduler.Schedule(TimeSpan.FromSeconds(5), async () => await this.ProcessChanges());
             _scheduler.ScheduleCron("*/5  * * * *", async () => await this.ProcessChanges());
 
-            
+            _ha.Entity(_config.ForceHomeEntityId).StateChanges().SubscribeAsync(async x =>
+            {
+                _logger.LogInformation($"{_config.ForceHomeEntityId} changed from {x.Old?.State} to {x.New?.State}");
+                await ProcessChanges();
+            });
+
+
 
             foreach (var person in _config.People)
             {
@@ -56,13 +62,38 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
         private async Task ProcessChanges()
         {
             _logger.LogInformation($"PROCESS STARTED");
+
+            var forceHomeEntityIdEntity = this._ha.Entity(_config.ForceHomeEntityId);
             await _ecobee.Authenticate();
             var t = await _ecobee.GetThermostat();
-            var nightMode = t.program.currentClimateRef.ToUpper() == "SLEEP" || t.program.currentClimateRef.ToUpper() == "SLEEPING";
+
+            if (String.Compare(forceHomeEntityIdEntity.State ,"on",true)==0)
+            {
+                //if (String.Compare(t.program.currentClimateRef, "home", true)!=0)
+                {
+                    _logger.LogInformation($"Force Setting Climate to HOME");
+                    await _ecobee.ClearPreset();
+                    //Thread.Sleep(5000);
+                    //await _ecobee.SetPreset("home");
+
+                }
+                _logger.LogInformation($"PROCESS COMPLETED");
+
+                return;
+            }
+            //if (t.events?.LastOrDefault()?.holdClimateRef.ToUpper() == "AWAY")
+            //{
+            //    _logger.LogInformation($"Setting Climate to RESUME");
+            //    await _ecobee.ClearPreset();
+            //}
+
+            var ocupancies = t.remoteSensors.Select(x => new { Name=x.name, Ocupancy=x.capability.Where(c=> c.type.ToUpper()=="OCCUPANCY").Select(x=> Boolean.Parse(x.value)).FirstOrDefault() }).ToDictionary(x=> x.Name);
+            var climate = t.program.climates.FirstOrDefault(x => x.climateRef == t.program.currentClimateRef);
+            var nightMode = climate.name.ToUpper() == "SLEEP" || climate.name.ToUpper() == "SLEEPING";
             _ecobee.ClearAllSensors(t);
             System.Collections.Generic.IEnumerable<Climate> climates = t.program.climates.Where(x => x.name.ToUpper() != "AWAY");
         
-            _logger.LogInformation($"Thermostat Climate: {t.program.currentClimateRef}");
+            _logger.LogInformation($"Thermostat Climate: {climate.name}");
 
             foreach (var person in _config.People)
             {
@@ -72,9 +103,9 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
                 {
                     System.Collections.Generic.IEnumerable<string> sensors = person.ActivateSensors;
                     if (nightMode)
-                        sensors = sensors.Where(x => !_config.NightModeIgnoreSensors.Contains(x));
+                        sensors = sensors.Where(x =>   !_config.NightModeIgnoreSensors.Contains(x));
                     else
-                        sensors = sensors.Where(x => !_config.DayModeIgnoreSensors.Contains(x));
+                        sensors = sensors.Where(x =>  !_config.DayModeIgnoreSensors.Contains(x));
 
                     foreach (string sensor in sensors)
                     {
@@ -94,7 +125,7 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
             }
             else
             {
-                if (t.events.LastOrDefault()?.holdClimateRef.ToUpper() == "AWAY")
+                if (t.events?.LastOrDefault()?.holdClimateRef.ToUpper() == "AWAY")
                 {
                     _logger.LogInformation($"Setting Climate to RESUME");
                     await _ecobee.ClearPreset();
