@@ -99,7 +99,9 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
             {
                 var entity = _ha.Entity(person.EntityId);
                 _logger.LogInformation($"{person.EntityId} is {entity.EntityState?.State}");
-                if (entity.EntityState?.State.ToUpper() == "HOME")
+                var isInHome = entity.EntityState?.State.ToUpper() == "HOME";
+           
+                if (isInHome )
                 {
                     System.Collections.Generic.IEnumerable<string> sensors = person.ActivateSensors;
                     if (nightMode)
@@ -113,6 +115,14 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
                         _ecobee.UpdateSensor(t, sensor, climates.Select(x=>x.name).ToArray());
 
                     }
+                }
+            }
+            foreach (var occupancy in ocupancies)
+            {
+                if (occupancy.Value.Ocupancy) 
+                {
+                    //var sensor = t.remoteSensors.FirstOrDefault(x=> String.Compare(x.name, occupancy.Key,true)==0);
+                    _ecobee.UpdateSensor(t, occupancy.Key, climates.Select(x => x.name).ToArray());
                 }
             }
             await _ecobee.SendUpdates(t);
