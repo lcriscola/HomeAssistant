@@ -87,7 +87,7 @@ namespace NetDaemon3Apps.AdjustEcobeeClimateBasedOnPresence
             //    await _ecobee.ClearPreset();
             //}
 
-            var ocupancies = t.remoteSensors.Select(x => new { Name=x.name, Ocupancy=x.capability.Where(c=> c.type.ToUpper()=="OCCUPANCY").Select(x=> Boolean.Parse(x.value)).FirstOrDefault() }).ToDictionary(x=> x.Name);
+            var ocupancies = t.remoteSensors.Select(x => new { Name=x.name, Ocupancy=x.capability.Where(c=> c.type.ToUpper()=="OCCUPANCY" ).Select(x=> Boolean.Parse(x.value)).FirstOrDefault() }).Where(x => x.Name.ToUpper() != "THERMOSTAT").ToDictionary(x=> x.Name);
             var climate = t.program.climates.FirstOrDefault(x => x.climateRef == t.program.currentClimateRef);
             var nightMode = climate.name.ToUpper() == "SLEEP" || climate.name.ToUpper() == "SLEEPING";
             _ecobee.ClearAllSensors(t);

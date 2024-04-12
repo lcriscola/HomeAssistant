@@ -15,11 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.IRTester.vsarduino.h">
+    <ClInclude Include="__vm\.IRPIRemote.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IRTester.ino" />
+    <ClCompile Include="IRPIRemote.ino" />
   </ItemGroup>
 </Project>

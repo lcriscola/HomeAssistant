@@ -1,5 +1,5 @@
 /* Finding the key codes for your remote. More info: https://www.makerguides.com */
-#include <IRremote.h> // include the IRremote library
+#include "IRremote.h" // include the IRremote library
 #define RECEIVER_PIN 5 // define the IR receiver pin
 IRrecv receiver(RECEIVER_PIN); // create a receiver object of the IRrecv class
 decode_results results; // create a results object of the decode_results class
@@ -49,8 +49,8 @@ void loop() {
         {
 
         }
-        //else
-        //    Serial.println(receiver.decodedIRData.decodedRawData, HEX); // print the values in the Serial Monitor
+        else
+            Serial.println(receiver.decodedIRData.decodedRawData, HEX); // print the values in the Serial Monitor
 
         key_value = results.value;
         receiver.resume(); // reset the receiver for the next code
